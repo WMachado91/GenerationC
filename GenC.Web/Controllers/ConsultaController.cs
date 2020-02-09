@@ -53,7 +53,8 @@ namespace GenC.Web.Controllers
             return Json(new { mensagem = mensagemRetorno });
 
         }
-        public ActionResult buscarEventos(string pesquisa)
+        [HttpGet]
+        public ActionResult BuscarEventos(string pesquisa = null)
         {
             if (!SessionAuth())
             {
@@ -64,17 +65,18 @@ namespace GenC.Web.Controllers
 
             if (!String.IsNullOrEmpty(pesquisa))
             {
-                var devices = db.Agendamentos.Where(d => d.Usuarios.Id == UsuariosId && d.Titulo.Contains(pesquisa) || d.Usuarios.Id == UsuariosId && d.Descricao.Contains(pesquisa));
-                return Json(devices.ToList(), JsonRequestBehavior.AllowGet);
+                var devices = db.Agendamentos.Where(d => d.Usuarios.Id == UsuariosId && d.Titulo.Contains(pesquisa) || d.Usuarios.Id == UsuariosId && d.Descricao.Contains(pesquisa)).OrderByDescending(d => d.DtAgendamento).ToList();
+                return Json(devices, JsonRequestBehavior.AllowGet);
             }
 
             else
             {
-                var devices = db.Agendamentos.Where(d => d.Usuarios.Id == UsuariosId);
+                var devices = db.Agendamentos.Where(d => d.Usuarios.Id == UsuariosId).OrderByDescending(d => d.DtAgendamento).ToList();
                 return Json(devices.ToList(), JsonRequestBehavior.AllowGet);
             }
 
 
         }
+
     }
 }
