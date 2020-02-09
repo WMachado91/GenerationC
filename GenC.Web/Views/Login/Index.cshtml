@@ -1,0 +1,39 @@
+﻿@model GenC.Web.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<style>
+    .field-validation-error {
+    margin-left: 3em;
+}
+</style>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "col s12" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div >
+        @Html.ValidationSummary(true, "", new { @class = "field-validation-error" })
+        <div class="input-field col">
+            <i class="material-icons prefix">account_circle</i>
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "field-validation-error" })
+        </div>
+        <div class="input-field col">
+            <i class="material-icons prefix">lock_outline</i>
+            @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.PasswordFor(model => model.Senha, new { htmlAttributes = new { @minlength = 8 } })
+            @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "field-validation-error" })
+        </div>
+
+        <div class="col 12">
+            <button class="btn waves-effect waves-light right" type="submit" name="action">
+                Submit
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </div>
+}
+

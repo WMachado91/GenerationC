@@ -1,0 +1,28 @@
+﻿@model IEnumerable<GenC.Entity.Agendamentos>
+
+@{
+    ViewBag.Title = "Eventos";
+}
+<ul class="collection">
+    @foreach (var item in Model)
+    {
+        <li class="collection-item avatar">
+            <i class="material-icons circle">folder</i>
+            <span class="title">
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </span>
+            <p>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </p>
+            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+        </li>
+
+        @Html.DisplayFor(modelItem => item.DtAgendamento)
+        @Html.DisplayFor(modelItem => item.DtCriacao)
+        @Html.DisplayFor(modelItem => item.Endereco)
+        @Html.DisplayFor(modelItem => item.CEP)
+        @Html.DisplayFor(modelItem => item.Cidade)
+        @Html.DisplayFor(modelItem => item.Estado)
+    }
+</ul>
+<script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.ChaveGoogle" async defer></script>

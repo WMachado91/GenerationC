@@ -1,0 +1,70 @@
+﻿@model GenC.Entity.Usuarios
+
+@{
+    ViewBag.Title = "Cadastro";
+}<style>
+    .field-validation-error {
+        margin-left: 3em;
+    }
+</style>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "CadastroFrm", @class = "col s12" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        @Html.ValidationSummary(true, "", new { @class = "field-validation-error" })
+        <div class="row">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">mood</i>
+                @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @minlength = 10 } })
+                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "field-validation-error" })
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">lock_outline</i>
+                @Html.LabelFor(model => model.CPF, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                @Html.EditorFor(model => model.CPF, new { htmlAttributes = new { @class = "form-control cpf", @minlength = 14 } })
+                @Html.ValidationMessageFor(model => model.CPF, "", new { @class = "field-validation-error" })
+            </div>
+        </div>
+
+        <div class="input-field col">
+            <i class="material-icons prefix">mail_outline</i>
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @maxlength = 255, @minlength = 10 } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "field-validation-error" })
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">lock_outline</i>
+                @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                @Html.EditorFor(model => model.Senha, new { htmlAttributes = new { @minlength = 8, @maxlength = 20 } })
+                @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "field-validation-error" })
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">date_range</i>
+                @Html.LabelFor(model => model.DtNascimento, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.TextBoxFor(model => model.DtNascimento, new { @class = "datepicker" })
+                @Html.ValidationMessageFor(model => model.DtNascimento, "", new { @class = "field-validation-error" })
+            </div>
+        </div>
+        
+        <div class="col 12">
+            <button class="btn waves-effect waves-light right" type="submit" name="action">
+                Submit
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
