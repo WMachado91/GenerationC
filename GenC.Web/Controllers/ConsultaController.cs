@@ -54,7 +54,7 @@ namespace GenC.Web.Controllers
 
         }
         [HttpGet]
-        public ActionResult BuscarEventos(string pesquisa = null)
+        public ActionResult BuscarEventos(string pesquisa)
         {
             if (!SessionAuth())
             {
@@ -65,14 +65,14 @@ namespace GenC.Web.Controllers
 
             if (!String.IsNullOrEmpty(pesquisa))
             {
-                var devices = db.Agendamentos.Where(d => d.Usuarios.Id == UsuariosId && d.Titulo.Contains(pesquisa) || d.Usuarios.Id == UsuariosId && d.Descricao.Contains(pesquisa)).OrderByDescending(d => d.DtAgendamento).ToList();
-                return Json(devices, JsonRequestBehavior.AllowGet);
+                var agendamentos = db.Agendamentos.Where(d => d.Usuarios.Id == UsuariosId && d.Titulo.Contains(pesquisa) || d.Usuarios.Id == UsuariosId && d.Descricao.Contains(pesquisa)).OrderByDescending(d => d.DtAgendamento).ToList();
+                return Json(new { data = agendamentos }, JsonRequestBehavior.AllowGet);
             }
 
             else
             {
-                var devices = db.Agendamentos.Where(d => d.Usuarios.Id == UsuariosId).OrderByDescending(d => d.DtAgendamento).ToList();
-                return Json(devices.ToList(), JsonRequestBehavior.AllowGet);
+                var agendamentos = db.Agendamentos.Where(d => d.Usuarios.Id == UsuariosId).OrderByDescending(d => d.DtAgendamento).ToList();
+                return Json(new { data = agendamentos }, JsonRequestBehavior.AllowGet);
             }
 
 

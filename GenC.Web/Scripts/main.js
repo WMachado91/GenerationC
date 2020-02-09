@@ -20,16 +20,16 @@ $(document).ready(function () {
         pesquisacep($(this).val());
     });
 
-    $(".cpf").mask("999.999.999-99");  
+    $(".cpf").mask("999.999.999-99");
     $("#CEP").mask("99999-999");
-    $("#Estado").attr("disabled", "disabled");
-    $("#Cidade").attr("disabled", "disabled");
-    $("#Endereco").attr("disabled", "disabled");
+    //$("#Estado").attr("disabled", "disabled");
+    //$("#Cidade").attr("disabled", "disabled");
+    //$("#Endereco").attr("disabled", "disabled");
 
     $("#XY").click(function () {
         definitarLatLng(address);
     })
-        
+
     $("#DtNascimento").change(function () {
         var dtNascimento = $("#DtNascimento").val();
         var dtNascAno = new Date(dtNascimento).toLocaleString('pt-BR', { year: "numeric" });
@@ -87,7 +87,7 @@ $(document).ready(function () {
         }
     });
 
-    $(document).submit(function (e) {  
+    $(document).submit(function (e) {
         $("#loader").show();
     })
 });

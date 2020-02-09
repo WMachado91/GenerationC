@@ -4,27 +4,22 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table class="responsive-table highlight">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Usuarios.Nome)
+            @Html.DisplayNameFor(model => model.Titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descricao)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DtAgendamento)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DtCriacao)
+            @Html.DisplayNameFor(model => model.CEP)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Endereco)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CEP)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Cidade)
@@ -33,49 +28,39 @@
             @Html.DisplayNameFor(model => model.Estado)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Titulo)
+            Opções
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Usuarios.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DtAgendamento)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DtCriacao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Endereco)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CEP)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cidade)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Estado)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Titulo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descricao)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Titulo)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Descricao)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DtAgendamento)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CEP)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Endereco)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Cidade)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Estado)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+    </td>
+</tr>
 }
 
 </table>

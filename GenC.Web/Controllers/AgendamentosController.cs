@@ -10,15 +10,21 @@ using GenC.Entity;
 
 namespace GenC.Web.Controllers
 {
-    public class AgendamentosController : Controller
+    public class AgendamentosController : baseController
     {
-        private DbContextGenC db = new DbContextGenC();
-
         // GET: Agendamentos
         public ActionResult Index()
         {
-            var agendamentos = db.Agendamentos.Include(a => a.Usuarios);
-            return View(agendamentos.ToList());
+            if (!SessionAuth())
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            int UsuariosId = Current_user();
+            var agendamentos = db.Agendamentos.Where(d => d.Usuarios.Id == UsuariosId).OrderByDescending(d => d.DtAgendamento).ToList();
+            ViewBag.ChaveGoogle = GoogleMapsKey;
+
+            return View(agendamentos);
         }
 
         // GET: Agendamentos/Details/5
@@ -36,19 +42,14 @@ namespace GenC.Web.Controllers
             return View(agendamentos);
         }
 
-        // GET: Agendamentos/Create
         public ActionResult Create()
         {
-            ViewBag.IdUsuario = new SelectList(db.Usuarios, "Id", "Nome");
             return View();
         }
 
-        // POST: Agendamentos/Create
-        // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
-        // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdUsuario,DtAgendamento,DtCriacao,Endereco,CEP,Cidade,Estado,Titulo,Descricao")] Agendamentos agendamentos)
+        public ActionResult Create(Agendamentos agendamentos)
         {
             if (ModelState.IsValid)
             {
