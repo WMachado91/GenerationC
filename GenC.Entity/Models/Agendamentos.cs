@@ -6,7 +6,7 @@ namespace GenC.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Agendamentos
+    public  class Agendamentos
     {
         private DateTime _setDate = DateTime.Now;
         public int Id { get; set; }

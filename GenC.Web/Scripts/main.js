@@ -7,29 +7,33 @@ var data = new Date();
 
 $(document).ready(function () {
     $("#loader").hide();
+    $('.modal').modal({
+        onOpenStart: function (modal, evento) {
+            var id = evento.id;
+            $.ajax({
+                type: "GET",
+                url: `/Agendamentos/Details/${id}`,
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                success: function (res) {
+                    res = JSON.parse(res);
+                    var agendamento = res.Usuarios.Agendamentos[0];
+                    $("#modalDescricao").html(agendamento.Descricao);
+                    $("#modalHeader").html(agendamento.Titulo);
 
-    $('.datepicker').datepicker({
-        autoClose: true,
-        today: "Hoje",
-        selectMonths: true,
-        selectYears: true,
-        clear: false
-    });
-
-    $("#campo").click(function () {
-        pesquisacep($(this).val());
+                    definitarLatLng(agendamento.Endereco);
+                },
+                error: function (a, b, c) {
+                    console.log(a.responseText, b, c);
+                }
+            })
+        }
     });
 
     $(".cpf").mask("999.999.999-99");
     $("#CEP").mask("99999-999");
-    //$("#Estado").attr("disabled", "disabled");
-    //$("#Cidade").attr("disabled", "disabled");
-    //$("#Endereco").attr("disabled", "disabled");
 
-    $("#XY").click(function () {
-        definitarLatLng(address);
-    })
-
+ 
     $("#DtNascimento").change(function () {
         var dtNascimento = $("#DtNascimento").val();
         var dtNascAno = new Date(dtNascimento).toLocaleString('pt-BR', { year: "numeric" });
@@ -56,27 +60,6 @@ $(document).ready(function () {
 
         pesquisarPorCEP(cep);
 
-    });
-
-    $("#btnEnviar").click(function (e) {
-        var evento = {};
-
-        $.ajax({
-            type: "POST",
-            url: "\Consulta\castrarEvento",
-            contentType: "application/json; charset=utf-8",
-            async: false,
-            data: JSON.stringify(evento),
-            crossDomain: true,
-            dataType: "json",
-            success: function (res) {
-                toastr.success(res);
-            },
-            error: function (e) {
-
-                toastr.error(e);
-            }
-        })
     });
 
     $("#CadastroFrm").on('submit', function (e) {
@@ -118,6 +101,9 @@ function pesquisarPorCEP(cep) {
                     $("#Endereco").val(dados.logradouro);
                     $("#Cidade").val(dados.localidade);
                     $("#Estado").val(dados.uf);
+                    setTimeout(function () {
+                        $("#Endereco").focus();
+                    }, 1000)
                 }
 
                 else {
@@ -149,14 +135,13 @@ function initMap() {
         map: map
     });
 
-    $("#map").show();
 }
 
 function definitarLatLng(endereco) {
     var ret;
     geocoder = new google.maps.Geocoder();
 
-    geocoder.geocode({ 'address': address, 'region': 'BR' }, function (results, status) {
+    geocoder.geocode({ 'address': endereco, 'region': 'BR' }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
             ret = 1;
             if (results[0]) {

@@ -22,15 +22,7 @@
             @Html.ValidationMessageFor(model => model.DtAgendamento, "", new { @class = "text-danger" })
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.DtCriacao, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DtCriacao, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-            @Html.ValidationMessageFor(model => model.DtCriacao, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
+    
     <div class="form-group">
         @Html.LabelFor(model => model.CEP, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -86,10 +78,6 @@
     </div>
 </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

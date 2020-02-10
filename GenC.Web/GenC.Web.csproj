@@ -130,7 +130,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AgendamentosController.cs" />
     <Compile Include="Controllers\baseController.cs" />
-    <Compile Include="Controllers\ConsultaController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
@@ -263,7 +262,6 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Consulta\Index.cshtml" />
     <Content Include="Views\Agendamentos\Create.cshtml" />
     <Content Include="Views\Agendamentos\Delete.cshtml" />
     <Content Include="Views\Agendamentos\Details.cshtml" />

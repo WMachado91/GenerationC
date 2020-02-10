@@ -3,14 +3,22 @@
 @{
     ViewBag.Title = "Index";
 }
-
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4 id="modalHeader"></h4>
+        <p id="modalDescricao"></p>
+        <div id="map"></div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Fechar</a>
+    </div>
+</div><a class="left" href="@Url.Action("Create", "Agendamentos")">
+    <i class="medium material-icons">add_circle_outline</i>
+</a>
 <table class="responsive-table highlight">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Titulo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Descricao)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DtAgendamento)
@@ -32,35 +40,42 @@
         </th>
     </tr>
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Titulo)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Descricao)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DtAgendamento)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.CEP)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Endereco)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Cidade)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Estado)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-    </td>
-</tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DtAgendamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CEP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Endereco)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cidade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                <a href="#modal1" class="modal-trigger" id="@Html.DisplayFor(modelItem => item.Id)">
+                    <i class="material-icons">search</i>
+                </a>
+                <a href="/Agendamentos/Edit/@Html.DisplayFor(modelItem => item.Id)">
+                    <i class="material-icons">create</i>
+                </a>
+                <a href="/Agendamentos/Delete/@Html.DisplayFor(modelItem => item.Id)">
+                    <i class="material-icons">close</i>
+                </a>
+            </td>
+        </tr>
+    }
 </table>
+
+@section Scripts{
+    <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.ChaveGoogle" async defer></script>
+}

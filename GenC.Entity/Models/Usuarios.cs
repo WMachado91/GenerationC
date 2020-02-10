@@ -6,14 +6,8 @@ namespace GenC.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Usuarios
+    public  class Usuarios
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Usuarios()
-        {
-            Agendamentos = new HashSet<Agendamentos>();
-        }
-
         private DateTime _setDate = DateTime.Now;
         public int Id { get; set; }
 
@@ -49,7 +43,6 @@ namespace GenC.Entity
         [Display(Name = "Data de Nascimento")]
         public DateTime DtNascimento { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Agendamentos> Agendamentos { get; set; }
     }
 }

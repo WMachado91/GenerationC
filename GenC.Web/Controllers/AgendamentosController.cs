@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GenC.Entity;
+using Newtonsoft.Json;
 
 namespace GenC.Web.Controllers
 {
@@ -30,20 +31,36 @@ namespace GenC.Web.Controllers
         // GET: Agendamentos/Details/5
         public ActionResult Details(int? id)
         {
+            if (!SessionAuth())
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Agendamentos agendamentos = db.Agendamentos.Find(id);
+            var usuarioLogado = Current_user();
+            Agendamentos agendamentos = db.Agendamentos.Where(u => u.IdUsuario == usuarioLogado && u.Id == id).FirstOrDefault();
+
             if (agendamentos == null)
             {
                 return HttpNotFound();
             }
-            return View(agendamentos);
+            //var jsonRetorno = JsonConvert.SerializeObject(agendamentos);
+            return Json(JsonConvert.SerializeObject(agendamentos, Formatting.Indented,
+                    new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    }), JsonRequestBehavior.AllowGet);
+            //Json(agendamentos, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Create()
         {
+            if (!SessionAuth())
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
 
@@ -51,20 +68,29 @@ namespace GenC.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Agendamentos agendamentos)
         {
+            if (!SessionAuth())
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             if (ModelState.IsValid)
             {
+                var usuarioLogado = db.Usuarios.Find(Current_user());
+                agendamentos.IdUsuario = usuarioLogado.Id;
                 db.Agendamentos.Add(agendamentos);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.IdUsuario = new SelectList(db.Usuarios, "Id", "Nome", agendamentos.IdUsuario);
             return View(agendamentos);
         }
 
         // GET: Agendamentos/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (!SessionAuth())
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -83,10 +109,16 @@ namespace GenC.Web.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,IdUsuario,DtAgendamento,DtCriacao,Endereco,CEP,Cidade,Estado,Titulo,Descricao")] Agendamentos agendamentos)
+        public ActionResult Edit(Agendamentos agendamentos)
         {
+            if (!SessionAuth())
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (ModelState.IsValid)
             {
+                var usuarioLogado = db.Usuarios.Find(Current_user());
+                agendamentos.IdUsuario = usuarioLogado.Id;
                 db.Entry(agendamentos).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -98,6 +130,10 @@ namespace GenC.Web.Controllers
         // GET: Agendamentos/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (!SessionAuth())
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

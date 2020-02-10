@@ -19,7 +19,7 @@ namespace GenC.Web.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Consulta");
+                return RedirectToAction("Index", "Agendamentos");
             }
         }
 
@@ -46,7 +46,7 @@ namespace GenC.Web.Controllers
 
             SessionCookies(usuarioAcesso);
 
-            return RedirectToAction("Index", "Consulta");
+            return RedirectToAction("Index", "Agendamentos");
         }
 
         [HttpGet]

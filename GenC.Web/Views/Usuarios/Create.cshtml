@@ -49,7 +49,7 @@
             <div class="input-field col s6">
                 <i class="material-icons prefix">date_range</i>
                 @Html.LabelFor(model => model.DtNascimento, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.TextBoxFor(model => model.DtNascimento, new { @class = "datepicker" })
+                @Html.TextBoxFor(model => model.DtNascimento, new { @class = "", @type = "date"})
                 @Html.ValidationMessageFor(model => model.DtNascimento, "", new { @class = "field-validation-error" })
             </div>
         </div>
